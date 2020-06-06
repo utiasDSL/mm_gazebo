@@ -1,0 +1,34 @@
+# Settings for ros_control control loop
+hardware_control_loop:
+   loop_hz: 125
+
+# Settings for ros_control hardware interface
+hardware_interface:
+   joints:
+     - ur10_arm_shoulder_pan_joint
+     - ur10_arm_shoulder_lift_joint
+     - ur10_arm_elbow_joint
+     - ur10_arm_wrist_1_joint
+     - ur10_arm_wrist_2_joint
+     - ur10_arm_wrist_3_joint
+
+# Publish all joint states ----------------------------------
+joint_state_controller:
+   type:         joint_state_controller/JointStateController
+   publish_rate: 125
+
+# Publish wrench ----------------------------------
+force_torque_sensor_controller:
+   type:         force_torque_sensor_controller/ForceTorqueSensorController
+   publish_rate: 125
+
+ur10_velocity_controller:
+   type: velocity_controllers/JointGroupVelocityController
+   joints:
+     - ur10_arm_shoulder_pan_joint
+     - ur10_arm_shoulder_lift_joint
+     - ur10_arm_elbow_joint
+     - ur10_arm_wrist_1_joint
+     - ur10_arm_wrist_2_joint
+     - ur10_arm_wrist_3_joint
+   state_publish_rate: 125
