@@ -1,6 +1,6 @@
 <launch>
   <!-- Set up UR10 controller -->
-  <rosparam command="load" file="$(find mm_control_interface)/config/ur10_controllers.yaml"/>
+  <rosparam command="load" file="$(find mm_control_interface)/config/ur10_control.yaml"/>
   <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen" args="joint_state_controller ur10_velocity_controller --shutdown-timeout 1" />
 
   <!-- Remap from /ridgeback_velocity_controller/cmd_vel (which runs on the real robot) to /cmd_vel (the topic used for the simulated Ridgeback controller. -->

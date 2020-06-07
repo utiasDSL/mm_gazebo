@@ -2,12 +2,10 @@
 # Translate from mm_motion_control to Gazebo's ros_control interface
 import rospy
 
-import tf
 import tf.transformations as tfs
 
 from trajectory_msgs.msg import JointTrajectory
 from sensor_msgs.msg import JointState
-from geometry_msgs.msg import Pose
 from std_msgs.msg import Float64MultiArray
 from gazebo_msgs.msg import LinkStates
 
@@ -35,6 +33,7 @@ class UR10ControlInterface(object):
         # UR10 joint states are supplied in the /joint_states topic
         rospy.Subscriber('/joint_states', JointState, self.joint_state_cb)
 
+        # Ridgeback joint states are supplied by Gazebo
         rospy.Subscriber('/gazebo/link_states', LinkStates, self.link_states_cb)
 
         self.cmd_pub = rospy.Publisher('/ur10_velocity_controller/command',
