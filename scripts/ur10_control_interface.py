@@ -20,36 +20,15 @@ UR10_JOINT_NAMES = ['ur10_arm_shoulder_pan_joint',
                     'ur10_arm_wrist_3_joint']
 
 
-class PoseLookup(object):
-    ''' Lookup relative pose of frames. '''
-    def __init__(self):
-        self.tf_listener = tf.TransformListener()
-
-    def lookup(self, source, target):
-        now = rospy.Time.now()
-        # self.tf_listener.waitForTransform(source, target, now, rospy.Duration(10.0))
-
-        # initial position p and orientation (as a quaternion) q of the end effector
-        # p is an array containing [x, y, z] for the position vector
-        # q is an array containing [x, y, z, w] for the quaternion
-        p, q = self.tf_listener.lookupTransform(source, target, now)
-
-        # convert to a Pose message type
-        pose = Pose()
-        pose.position.x = p[0]
-        pose.position.y = p[1]
-        pose.position.z = p[2]
-
-        pose.orientation.x = q[0]
-        pose.orientation.y = q[1]
-        pose.orientation.z = q[2]
-        pose.orientation.w = q[3]
-
-        return pose
-
-
 class UR10ControlInterface(object):
     def __init__(self):
+        self.joint_idx = []
+
+        self.rb_position = [0] * 3
+        self.rb_velocity = [0] * 3
+        self.ur10_position = [0] * 6
+        self.ur10_velocity = [0] * 6
+
         rospy.Subscriber('/ur_driver/joint_speed', JointTrajectory,
                          self.ur10_joint_vel_cb)
 
@@ -58,29 +37,10 @@ class UR10ControlInterface(object):
 
         rospy.Subscriber('/gazebo/link_states', LinkStates, self.link_states_cb)
 
-        # Ridgeback x, y, theta are not properly supplied to /joint_states, so
-        # we need to use the odom data
-        # rospy.Subscriber('/ridgeback_velocity_controller/odom', Odometry,
-        #                  self.rb_odom_cb)
-
         self.cmd_pub = rospy.Publisher('/ur10_velocity_controller/command',
                                        Float64MultiArray, queue_size=10)
         self.joint_state_pub = rospy.Publisher('/mm_joint_states', JointState,
                                                queue_size=10)
-
-        self.pose_lookup = PoseLookup()
-
-        self.joint_idx = []
-
-        self.rb_position = [0] * 3
-        self.rb_velocity = [0] * 3
-        self.ur10_position = [0] * 6
-        self.ur10_velocity = [0] * 6
-
-    # def rb_odom_cb(self, msg):
-    #     ''' Odom is used to get base's velocity. '''
-    #     self.rb_velocity = [msg.twist.twist.linear.x, msg.twist.twist.linear.y,
-    #                         msg.twist.twist.angular.z]
 
     def joint_state_cb(self, msg):
         ''' Translate joint states published by Gazebo to those expected by
@@ -116,13 +76,6 @@ class UR10ControlInterface(object):
         array_msg = Float64MultiArray()
         array_msg.data = msg.points[0].velocities
         self.cmd_pub.publish(array_msg)
-
-    # def update_rb_pose(self):
-    #     pose = self.pose_lookup.lookup('odom', 'real_base_link')
-    #     q = [pose.orientation.x, pose.orientation.y, pose.orientation.z,
-    #          pose.orientation.w]
-    #     euler = tfs.euler_from_quaternion(q)
-    #     self.rb_position = [pose.position.x, pose.position.y, euler[2]]
 
     def publish_joint_states(self):
         msg = JointState()

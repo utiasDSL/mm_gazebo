@@ -1,15 +1,8 @@
 <launch>
-  <!-- Load UR10 and Ridgeback joint velocity controllers -->
+  <!-- Set up UR10 controller -->
   <rosparam command="load" file="$(find mm_control_interface)/config/ur10_controllers.yaml"/>
-
-  <!-- Launch ros_control controllers that interface with Gazebo -->
   <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen" args="joint_state_controller ur10_velocity_controller --shutdown-timeout 1" />
 
-  <!-- Launch controllers for the Ridgeback base. -->
-  <group ns="base">
-    <rosparam command="load" file="$(find mm_control_interface)/config/ridgeback_controllers.yaml"/>
-    <node name="ridgeback_hardware_interface" pkg="mm_control_interface" type="ridgeback_hardware_interface" output="screen"/>
-    <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen" args="ridgeback_velocity_controller" />
-  </group>
-
+  <!-- Remap from /ridgeback_velocity_controller/cmd_vel (which runs on the real robot) to /cmd_vel (the topic used for the simulated Ridgeback controller. -->
+  <node pkg="topic_tools" type="relay" name="cmd_vel_relay" args="ridgeback_velocity_controller/cmd_vel cmd_vel"/>
 </launch>
