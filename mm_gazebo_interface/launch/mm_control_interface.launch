@@ -5,4 +5,7 @@
 
   <!-- Remap from /ridgeback_velocity_controller/cmd_vel (which runs on the real robot) to /cmd_vel (the topic used for the simulated Ridgeback controller. -->
   <node pkg="topic_tools" type="relay" name="cmd_vel_relay" args="ridgeback_velocity_controller/cmd_vel cmd_vel"/>
+
+  <!-- Remap topics for the simulation environment. -->
+  <node pkg="mm_gazebo_interface" type="gazebo_interface.py" name="mm_gazebo_interface"/>
 </launch>

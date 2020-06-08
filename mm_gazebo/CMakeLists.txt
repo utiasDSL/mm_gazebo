@@ -10,8 +10,6 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package()
 
-roslaunch_add_file_check(launch/thing_world.launch)
-
 install(DIRECTORY launch Media worlds
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )

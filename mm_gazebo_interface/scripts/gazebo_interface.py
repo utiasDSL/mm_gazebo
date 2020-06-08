@@ -18,9 +18,10 @@ UR10_JOINT_NAMES = ['ur10_arm_shoulder_pan_joint',
                     'ur10_arm_wrist_3_joint']
 
 
-class UR10ControlInterface(object):
+class GazeboControlInterface(object):
     def __init__(self):
         self.joint_idx = []
+        self.joints_initialized = False
 
         self.rb_position = [0] * 3
         self.rb_velocity = [0] * 3
@@ -51,8 +52,18 @@ class UR10ControlInterface(object):
                 idx = msg.name.index(name)
                 self.joint_idx.append(idx)
 
-        self.ur10_position = [msg.position[i] for i in self.joint_idx]
-        self.ur10_velocity = [msg.velocity[i] for i in self.joint_idx]
+        # Joint information may not be populated right as the sim begins, so we
+        # need to check for an exception here.
+        try:
+            ur10_position = [msg.position[i] for i in self.joint_idx]
+            ur10_velocity = [msg.velocity[i] for i in self.joint_idx]
+
+            self.joints_initialized = True
+            self.ur10_position = ur10_position
+            self.ur10_velocity = ur10_velocity
+        except IndexError:
+            # joints are not initialized yet
+            pass
 
     def link_states_cb(self, msg):
         # look up the Ridgeback base link
@@ -77,6 +88,9 @@ class UR10ControlInterface(object):
         self.cmd_pub.publish(array_msg)
 
     def publish_joint_states(self):
+        # don't publish if not initialized
+        if not self.joints_initialized:
+            return
         msg = JointState()
         msg.header.stamp = rospy.Time.now()
 
@@ -94,9 +108,9 @@ class UR10ControlInterface(object):
 
 
 def main():
-    rospy.init_node('ur10_control_interface')
+    rospy.init_node('mm_gazebo_interface')
 
-    interface = UR10ControlInterface()
+    interface = GazeboControlInterface()
     interface.spin()
 
 
