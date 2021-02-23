@@ -19,38 +19,6 @@
       <x_velocity_p_gain>10000.0</x_velocity_p_gain>
       <y_velocity_p_gain>10000.0</y_velocity_p_gain>
     </plugin>
-
-    <!-- <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so"> -->
-    <!--   <robotNamespace>/</robotNamespace> -->
-    <!--   <updateRate>50.0</updateRate> -->
-    <!--   <bodyName>imu_link</bodyName> -->
-    <!--   <topicName>imu/data</topicName> -->
-    <!--   <accelDrift>0.005 0.005 0.005</accelDrift> -->
-    <!--   <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise> -->
-    <!--   <rateDrift>0.005 0.005 0.005 </rateDrift> -->
-    <!--   <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise> -->
-    <!--   <headingDrift>0.005</headingDrift> -->
-    <!--   <headingGaussianNoise>0.005</headingGaussianNoise> -->
-    <!-- </plugin> -->
-
-    <!-- If enabled, generate the optional Microstrain 3DM-GX2/3 IMU payload. -->
-    <!-- <xacro:if value="$(optenv RIDGEBACK_MICROSTRAIN_IMU 0)">
-      <gazebo>
-        <plugin name="upgraded_imu_controller" filename="libhector_gazebo_ros_imu.so">
-          <robotNamespace>/</robotNamespace>
-          <updateRate>50.0</updateRate>
-          <bodyName>upgraded_imu_link</bodyName>
-          <topicName>upgraded_imu/data</topicName>
-          <accelDrift>0.005 0.005 0.005</accelDrift>
-          <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-          <rateDrift>0.005 0.005 0.005 </rateDrift>
-          <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-          <headingDrift>0.005</headingDrift>
-          <headingGaussianNoise>0.005</headingGaussianNoise>
-        </plugin>
-      </gazebo>
-    </xacro:if> -->
-
   </gazebo>
 
   <!-- All static links get collapsed down to base_link in Gazebo, so that's
@@ -65,9 +33,6 @@
   <gazebo reference="top_link"><material>Gazebo/DarkGrey</material></gazebo>
   <gazebo reference="front_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
   <gazebo reference="rear_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <!--gazebo reference="front_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="rear_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="axle_link"><material>Gazebo/DarkGrey</material></gazebo-->
 
   <!-- Wheel friction to zero, as movement is handled by applying forces at
        the body level. -->
@@ -90,24 +55,4 @@
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
   </gazebo>
-
-  <!-- This is an wheel-level solution to possibly revisit at a future date. -->
-  <!--gazebo>
-    <plugin name="mecanum_gazebo" filename="libmecanum_force_plugin.so">
-      <wheelJointName>front_left_wheel</wheelJointName>
-      <forceScaleFactor>1</forceScaleFactor>
-    </plugin>
-    <plugin name="mecanum_gazebo" filename="libmecanum_force_plugin.so">
-      <wheelJointName>front_right_wheel</wheelJointName>
-      <forceScaleFactor>-1</forceScaleFactor>
-    </plugin>
-    <plugin name="mecanum_gazebo" filename="libmecanum_force_plugin.so">
-      <wheelJointName>rear_left_wheel</wheelJointName>
-      <forceScaleFactor>-1</forceScaleFactor>
-    </plugin>
-    <plugin name="mecanum_gazebo" filename="libmecanum_force_plugin.so">
-      <wheelJointName>rear_right_wheel</wheelJointName>
-      <forceScaleFactor>1</forceScaleFactor>
-    </plugin>
-  </gazebo> -->
 </robot>

@@ -1,4 +1,6 @@
 <launch>
+  <arg name="gui" default="true"/>
+
   <!-- Start Gazebo simulation -->
   <include file="$(find mm_gazebo)/launch/gazebo_setup.launch" pass_all_args="true" />
 

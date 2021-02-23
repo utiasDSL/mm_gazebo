@@ -1,12 +1,4 @@
 <launch>
   <param name="robot_description"
          command="$(find xacro)/xacro $(find mm_description)/urdf/mm.urdf.xacro" />
-
-  <param name="robot_description_semantic" textfile="$(find mm_description)/urdf/mm.srdf" />
-
-   <!-- tool frame - relative to tool0, offset is given in z -->
-   <!--
-   <arg name="TCP_offset" value="0.29" />
-   <node pkg="tf" type="static_transform_publisher" name="tool_frame_pub" args="0.0 0.0 $(arg TCP_offset) 0.26179939 0.0 1.5707963 /ur10_arm_tool0 /thing_tool 100"/>
- -->
 </launch>
