@@ -1,7 +1,8 @@
 <launch>
   <param name="robot_description"
-         command="$(find xacro)/xacro $(find mm_description)/urdf/thing.urdf.xacro" />
-  <param name="robot_description_semantic" textfile="$(find mm_description)/urdf/ridgeback.srdf" />
+         command="$(find xacro)/xacro $(find mm_description)/urdf/mm.urdf.xacro" />
+
+  <param name="robot_description_semantic" textfile="$(find mm_description)/urdf/mm.srdf" />
 
    <!-- tool frame - relative to tool0, offset is given in z -->
    <!--

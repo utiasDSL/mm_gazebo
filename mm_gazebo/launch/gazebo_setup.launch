@@ -33,12 +33,13 @@
   <arg unless="$(arg debug)" name="script_type" value="gzserver"/>
   <arg     if="$(arg debug)" name="script_type" value="debug"/>
 
-  <!-- Merge auxiliary joint state topics into /joint_states"-->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="/use_gui" value="false"/>
-    <param name="/rate" value="100"/>
-    <rosparam param="/source_list">[/robotiq_hands/left_hand/joint_states,/joint_states_aux]</rosparam>
-  </node>
+    <!-- Merge auxiliary joint state topics into /joint_states"-->
+    <!-- TODO can we do something here? -->
+  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"> -->
+  <!--   <param name="/use_gui" value="false"/> -->
+  <!--   <param name="/rate" value="100"/> -->
+  <!--   <rosparam param="/source_list">[/robotiq_hands/left_hand/joint_states,/joint_states_aux]</rosparam> -->
+  <!-- </node> -->
 
 
   <!-- start gazebo server, remap non-full joint_states to auxiliary topic-->
@@ -47,7 +48,7 @@
   </group>
   <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" output="screen"
 	args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) $(arg extra_gazebo_args) $(arg world_name)" >
-        <remap from="/joint_states" to="/joint_states_aux" />
+        <!-- <remap from="/joint_states" to="/joint_states_aux" /> -->
         <remap from="tf" to="gazebo_tf"/>
   </node>
 

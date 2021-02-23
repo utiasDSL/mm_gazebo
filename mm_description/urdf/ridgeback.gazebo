@@ -20,18 +20,18 @@
       <y_velocity_p_gain>10000.0</y_velocity_p_gain>
     </plugin>
 
-    <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
-      <robotNamespace>/</robotNamespace>
-      <updateRate>50.0</updateRate>
-      <bodyName>imu_link</bodyName>
-      <topicName>imu/data</topicName>
-      <accelDrift>0.005 0.005 0.005</accelDrift>
-      <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-      <rateDrift>0.005 0.005 0.005 </rateDrift>
-      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-      <headingDrift>0.005</headingDrift>
-      <headingGaussianNoise>0.005</headingGaussianNoise>
-    </plugin>
+    <!-- <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so"> -->
+    <!--   <robotNamespace>/</robotNamespace> -->
+    <!--   <updateRate>50.0</updateRate> -->
+    <!--   <bodyName>imu_link</bodyName> -->
+    <!--   <topicName>imu/data</topicName> -->
+    <!--   <accelDrift>0.005 0.005 0.005</accelDrift> -->
+    <!--   <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise> -->
+    <!--   <rateDrift>0.005 0.005 0.005 </rateDrift> -->
+    <!--   <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise> -->
+    <!--   <headingDrift>0.005</headingDrift> -->
+    <!--   <headingGaussianNoise>0.005</headingGaussianNoise> -->
+    <!-- </plugin> -->
 
     <!-- If enabled, generate the optional Microstrain 3DM-GX2/3 IMU payload. -->
     <!-- <xacro:if value="$(optenv RIDGEBACK_MICROSTRAIN_IMU 0)">

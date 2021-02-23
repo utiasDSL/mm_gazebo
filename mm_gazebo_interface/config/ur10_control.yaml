@@ -32,3 +32,12 @@ ur10_velocity_controller:
      - ur10_arm_wrist_2_joint
      - ur10_arm_wrist_3_joint
    state_publish_rate: 125
+
+
+# ridgeback_cartesian_controller:
+#    type: velocity_controllers/JointTrajectoryController
+#    joints:
+#      - ridgeback_x
+#      - ridgeback_y
+#      - ridgeback_theta
+#    state_publish_rate: 125

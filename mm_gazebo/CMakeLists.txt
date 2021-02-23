@@ -17,9 +17,9 @@ install(DIRECTORY launch Media worlds
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
-add_executable(ground_truth_publisher src/ground_truth_publisher.cc)
- target_link_libraries(ground_truth_publisher
-   ${catkin_LIBRARIES}
- )
+# add_executable(ground_truth_publisher src/ground_truth_publisher.cc)
+#  target_link_libraries(ground_truth_publisher
+#    ${catkin_LIBRARIES}
+#  )
 
 

@@ -28,13 +28,16 @@ class GazeboControlInterface(object):
         self.ur10_position = [0] * 6
         self.ur10_velocity = [0] * 6
 
+        # UR10 commands from controller are published to this topic.
         rospy.Subscriber('/ur_driver/joint_speed', JointTrajectory,
                          self.ur10_joint_vel_cb)
 
         # UR10 joint states are supplied in the /joint_states topic
+        # TODO map to ur10_joint_states (matching real)
         rospy.Subscriber('/joint_states', JointState, self.joint_state_cb)
 
         # Ridgeback joint states are supplied by Gazebo
+        # TODO can this be obstained using some other topic too?
         rospy.Subscriber('/gazebo/link_states', LinkStates, self.link_states_cb)
 
         self.cmd_pub = rospy.Publisher('/ur10_velocity_controller/command',
@@ -94,9 +97,9 @@ class GazeboControlInterface(object):
         msg = JointState()
         msg.header.stamp = rospy.Time.now()
 
-        msg.effort = [0] * 9
         msg.position = self.rb_position + self.ur10_position
         msg.velocity = self.rb_velocity + self.ur10_velocity
+        # no effort info
 
         self.joint_state_pub.publish(msg)
 

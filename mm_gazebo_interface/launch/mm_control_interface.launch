@@ -1,10 +1,13 @@
 <launch>
-  <!-- Set up UR10 controller -->
+  <!-- UR10 controller -->
   <rosparam command="load" file="$(find mm_gazebo_interface)/config/ur10_control.yaml"/>
   <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen" args="joint_state_controller ur10_velocity_controller --shutdown-timeout 1" />
 
+  <!-- Ridgeback controller -->
+  <include file="$(find ridgeback_control)/launch/control.launch" />
+
   <!-- Remap from /ridgeback_velocity_controller/cmd_vel (which runs on the real robot) to /cmd_vel (the topic used for the simulated Ridgeback controller. -->
-  <node pkg="topic_tools" type="relay" name="cmd_vel_relay" args="ridgeback_velocity_controller/cmd_vel cmd_vel"/>
+  <!-- <node pkg="topic_tools" type="relay" name="cmd_vel_relay" args="ridgeback_velocity_controller/cmd_vel cmd_vel"/> -->
 
   <!-- Remap topics for the simulation environment. -->
   <node pkg="mm_gazebo_interface" type="gazebo_interface.py" name="mm_gazebo_interface"/>
