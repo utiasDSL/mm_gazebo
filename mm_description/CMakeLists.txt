@@ -7,16 +7,4 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_msgs
 )
 
-catkin_package(
-)
-
-include_directories(include)
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
-
-add_executable(odom_to_base src/odom_to_base.cpp)
-
-target_link_libraries(odom_to_base
-   ${catkin_LIBRARIES}
-)
+catkin_package()

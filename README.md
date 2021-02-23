@@ -29,7 +29,7 @@ git checkout 1.6.0
 Run `roslaunch mm_gazebo simulation.launch`.
 
 ## Packages
-* `mm_description`: URDF for the robot. Taken from `thing_description`.
+* `mm_description`: URDF for the robot. Adapted from `thing_description`.
 * `mm_gazebo`: Launch files for setting up and running the simulation. Adapted
   from `thing_gazebo`.
 * `mm_gazebo_interface`: Sets up control interfaces for the Gazebo simulation.

@@ -2,10 +2,10 @@
 <package>
   <name>mm_gazebo</name>
   <version>0.0.1</version>
-  <description>Launchfiles to use Ridgeback in Gazebo.</description>
+  <description>Launch files for mm simulation with Gazebo.</description>
 
-  <maintainer email="mpurvis@clearpathrobotics.com">Mike Purvis</maintainer>
-  <author>Mike Purvis</author>
+  <maintainer email="adam.heins@robotics.utias.utoronto.ca">Adam Heins</maintainer>
+  <author>Adam Heins</author>
 
   <license>BSD</license>
 
