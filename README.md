@@ -22,7 +22,7 @@ Clone ridgeback, since we need a specific version. Do not install via apt!
 ```
 git clone https://github.com/ridgeback/ridgeback
 cd ridgeback
-git checkout 1.6.0
+git checkout 0.1.6
 ```
 
 ## Usage
