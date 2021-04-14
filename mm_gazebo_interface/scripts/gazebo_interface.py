@@ -29,6 +29,7 @@ class GazeboControlInterface(object):
     def __init__(self):
         self.joint_idx = []
         self.joints_initialized = False
+        self.rb_initialized = False
 
         self.rb_position = [0] * 3
         self.rb_velocity = [0] * 3
@@ -82,7 +83,12 @@ class GazeboControlInterface(object):
 
     def link_states_cb(self, msg):
         # look up the Ridgeback base link
-        idx = msg.name.index(RB_BASELINK_NAME)
+        # this will raise an error before the Ridgeback is loaded in Gazebo
+        try:
+            idx = msg.name.index(RB_BASELINK_NAME)
+        except ValueError:
+            return
+
         pose = msg.pose[idx]
         twist = msg.twist[idx]
 
@@ -97,6 +103,7 @@ class GazeboControlInterface(object):
 
         self.rb_position = [pose.position.x, pose.position.y, euler[2]]
         self.rb_velocity = [twist.linear.x, twist.linear.y, twist.angular.z]
+        self.rb_initialized = True
 
     def ur10_joint_vel_cb(self, msg):
         """Translate velocity commands from mm_motion_control to the
@@ -108,7 +115,7 @@ class GazeboControlInterface(object):
 
     def publish_joint_states(self):
         # don't publish if not initialized
-        if not self.joints_initialized:
+        if not self.joints_initialized or not self.rb_initialized:
             return
         msg = JointState()
         msg.header.stamp = rospy.Time.now()
