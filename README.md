@@ -6,23 +6,26 @@ running Gazebo simulations, based on work from the original [thing
 repository](https://github.com/utiasSTARS/thing).
 
 ## Dependencies
-Install apt dependencies:
+
+The UR packages are not available from apt, so clone from source into the
+workspace:
 ```
-sudo apt install ros-indigo-ur-description ros-indigo-ridgeback-gazebo-plugins
+git clone https://github.com/ros-industrial/universal_robot
 ```
 
-Clone robotiq (not available as an apt package):
+Robotiq must also be cloned:
 ```
 git clone https://github.com/ros-industrial/robotiq
-cd robotiq
-git checkout indigo-devel
 ```
 
-Clone ridgeback, since we need a specific version. Do not install via apt!
+Ridgeback packages can be installed from apt:
 ```
-git clone https://github.com/ridgeback/ridgeback
-cd ridgeback
-git checkout 0.1.6
+sudo apt install ros-<distro>-ridgeback-simulator ros-<distro>-ridgeback-control ros-<distro>-ridgeback-description
+```
+
+We also need some generic control infrastructure:
+```
+sudo apt install ros-<distro>-ros-control ros-<distro>-ros-controllers ros-<distro>-gazebo-ros-control
 ```
 
 ## Usage

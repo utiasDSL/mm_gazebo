@@ -55,7 +55,7 @@ class GazeboControlInterface(object):
 
         # Package the above together in the usual /mm_joint_states topic.
         self.joint_state_pub = rospy.Publisher(
-            "/mm_joint_states", JointState, queue_size=10
+            "/mm/joint_states", JointState, queue_size=10
         )
 
     def joint_state_cb(self, msg):
@@ -63,13 +63,21 @@ class GazeboControlInterface(object):
         mm_motion_control."""
         # If we haven't already done so, we need to pick out the relevant
         # joints.
-        if len(self.joint_idx) == 0:
-            for name in UR10_JOINT_NAMES:
-                idx = msg.name.index(name)
-                self.joint_idx.append(idx)
-
         # Joint information may not be populated right as the sim begins, so we
         # need to check for an exception here.
+        try:
+            if len(self.joint_idx) == 0:
+                joint_idx = []
+                for name in UR10_JOINT_NAMES:
+                    idx = msg.name.index(name)
+                    joint_idx.append(idx)
+                self.joint_idx = joint_idx
+        except ValueError:
+            return
+
+        # In addition to the above check, it is possible that other messages
+        # will be published to /joint_states
+        # TODO more robust check for this
         try:
             ur10_position = [msg.position[i] for i in self.joint_idx]
             ur10_velocity = [msg.velocity[i] for i in self.joint_idx]
@@ -78,7 +86,6 @@ class GazeboControlInterface(object):
             self.ur10_position = ur10_position
             self.ur10_velocity = ur10_velocity
         except IndexError:
-            # joints are not initialized yet
             pass
 
     def link_states_cb(self, msg):

@@ -4,8 +4,12 @@
   <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen" args="joint_state_controller ur10_velocity_controller --shutdown-timeout 1" />
 
   <!-- Ridgeback controller -->
-  <include file="$(find ridgeback_control)/launch/control.launch" />
+  <rosparam command="load" file="$(find ridgeback_control)/config/control.yaml" />
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        args="ridgeback_joint_publisher ridgeback_velocity_controller --shutdown-timeout 1" />
+  <node pkg="topic_tools" type="relay" name="cmd_vel_relay"
+        args="ridgeback_velocity_controller/cmd_vel cmd_vel" />
 
   <!-- Remap topics for the simulation environment. -->
-  <node pkg="mm_gazebo_interface" type="gazebo_interface.py" name="mm_gazebo_interface"/>
+  <node pkg="mm_gazebo_interface" type="gazebo_interface.py" name="mm_gazebo_interface" output="screen" />
 </launch>

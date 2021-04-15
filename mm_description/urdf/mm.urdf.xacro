@@ -11,11 +11,11 @@
 			</geometry>
 		</visual>
 
-		<collision>
-			<geometry>
-				<mesh filename="package://mm_description/meshes/tor11_mech.dae" />
-			</geometry>
-		</collision>
+		<!-- <collision> -->
+		<!-- 	<geometry> -->
+		<!-- 		<mesh filename="package://mm_description/meshes/tor11_mech.dae" /> -->
+		<!-- 	</geometry> -->
+		<!-- </collision> -->
    </link>
 
   <joint name="arch_joint" type="fixed">
@@ -25,8 +25,8 @@
   </joint>
 
   <!-- Spawn UR10 arm -->
-  <xacro:include filename="$(find mm_description)/urdf/ur10.urdf.xacro" />
-  <xacro:ur10_robot prefix="ur10_arm_" joint_limited="false"/>
+  <xacro:include filename="$(find ur_description)/urdf/ur10.urdf.xacro" />
+  <xacro:ur10_robot prefix="ur10_arm_" joint_limited="false" transmission_hw_interface="hardware_interface/VelocityJointInterface"/>
 
   <!-- Tool frame -->
   <xacro:property name="TCP_offset" value="0.29" />  <!-- must also be changed in thing_kinematics.h if changed here -->
@@ -81,23 +81,21 @@
  	  <child link="wrist_cam_mount_link" />
    </joint>
 
-  <!-- Spawn and Join Gripper. Giving it a prefix of l_ to work with gazebo plugin -->
-  <!--<xacro:s-model_articulated prefix="" />-->
-
-<!-- origin, may be worth fixing better later: .03m from center of .06 long FT sensor plus extra link pieces, palm is 104.8mm long so assuming frame is at 52.4mm, minus 9.5mm for coupling -->
-  <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
-  <xacro:robotiq_hand prefix="l_" parent="ur10_arm_ee_link" reflect="-1">
-    <origin xyz="0.11 0.0 0.0" rpy="0.0 ${PI/12} -${PI/2}"/>
-  </xacro:robotiq_hand>
-
-  <!-- gazebo for gripper -->
-   <gazebo>
-    <plugin name="robotiq_hand_plugin" filename="libRobotiqHandPlugin.so">
-      <side>left</side>
-      <kp_position>10.0</kp_position>
-      <kd_position>0.5</kd_position>
-    </plugin>
-  </gazebo>
+   <!-- origin, may be worth fixing better later: .03m from center of .06 long FT sensor plus extra link pieces, palm is 104.8mm long so assuming frame is at 52.4mm, minus 9.5mm for coupling -->
+   <!-- TODO: gripper disabled for now because it seems to cause weird dynamic in Gazebo -->
+  <!-- <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq_hand_macro.urdf.xacro" /> -->
+  <!-- <xacro:robotiq_hand prefix="l_" parent="ur10_arm_ee_link" reflect="&#45;1"> -->
+  <!--   <origin xyz="0.11 0.0 0.0" rpy="0.0 ${PI/12} &#45;${PI/2}"/> -->
+  <!-- </xacro:robotiq_hand> -->
+  <!--  -->
+  <!-- <!&#45;&#45; gazebo for gripper &#45;&#45;> -->
+  <!--  <gazebo> -->
+  <!--   <plugin name="robotiq_hand_plugin" filename="libRobotiqHandPlugin.so"> -->
+  <!--     <side>left</side> -->
+  <!--     <kp_position>10.0</kp_position> -->
+  <!--     <kd_position>0.5</kd_position> -->
+  <!--   </plugin> -->
+  <!-- </gazebo> -->
 
   <!-- Inflate collision geometry near connectors-->
   <!--
