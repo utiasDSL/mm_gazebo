@@ -1,9 +1,9 @@
-# mm_gazebo_simulation
+# Mobile Manipulator Gazebo Simulation
 
-Extension to the [mm project
-code](https://github.com/utiasDSL/dsl__projects__mobile_manipulator) for
-running Gazebo simulations, based on work from the original [thing
-repository](https://github.com/utiasSTARS/thing).
+Extension to the [mobile manipulator project
+code](https://github.com/utiasDSL/mm_diff_ik) for running Gazebo simulations.
+
+**This repository is no longer maintained.**
 
 ## Dependencies
 
@@ -32,8 +32,6 @@ sudo apt install ros-<distro>-ros-control ros-<distro>-ros-controllers ros-<dist
 Run `roslaunch mm_gazebo simulation.launch`.
 
 ## Packages
-* `mm_description`: URDF for the robot. Adapted from `thing_description`.
-* `mm_gazebo`: Launch files for setting up and running the simulation. Adapted
-  from `thing_gazebo`.
+* `mm_description`: URDF for the robot.
+* `mm_gazebo`: Launch files for setting up and running the simulation.
 * `mm_gazebo_interface`: Sets up control interfaces for the Gazebo simulation.
-  Partially adapted from `thing_control`.
